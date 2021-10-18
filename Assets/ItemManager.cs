@@ -37,7 +37,7 @@ public class ItemManager : MonoBehaviour
     }
     public void prev()
     {
-        currentClothesID = (2*currentClothesID - 1) % clothesCount;
+        currentClothesID = ((2 * clothesCount) + currentClothesID - 1) % clothesCount;
         deactivateAllChildren();
         clothesRoot.transform.GetChild(currentClothesID).gameObject.SetActive(true);
     }
