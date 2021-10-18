@@ -14,7 +14,8 @@ public class SpinnyManager : MonoBehaviour
     public float decreaseFactor = 0.2f;
     public GameObject objectSpinny;
 
-    private float currentInputDelta;
+    private float currentSpeedWithDir;
+    public CameraManager cm;
 
     public SpinnyManager(GameObject objectSpinny)
     {
@@ -35,8 +36,10 @@ public class SpinnyManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        currentInputDelta = currentInputDelta * (1 - Math.Min(1, decreaseFactor));
-        rotateSpinnyItem(currentInputDelta);
+        currentSpeedWithDir = currentSpeedWithDir * (1 - Math.Min(1, decreaseFactor));
+        rotateSpinnyItem(currentSpeedWithDir);
+        float currentSpeedMag = Mathf.Abs(currentSpeedWithDir);
+        cm.zoomCamera(speedToFOV(currentSpeedMag));
         //var presentRotationSpeed = 0;
         //if (Mathf.Abs(momentumInputSpeed) > Mathf.Abs(currentInputDelta))
         //{
@@ -49,7 +52,14 @@ public class SpinnyManager : MonoBehaviour
         //}
 
     }
-    
+
+    private float speedToFOV(float currentSpeed)
+    {
+        float fovMin = 66f;
+        float fovMore = 8f;
+        return (currentSpeed* fovMore) +fovMin;
+    }
+
     private void rotateSpinnyItem(float rotation1Direction)
     {
 
@@ -58,7 +68,7 @@ public class SpinnyManager : MonoBehaviour
 
     public void updateInputDelta(float touchPointHorz)
     {
-        currentInputDelta = touchPointHorz;
+        currentSpeedWithDir = touchPointHorz;
         //momentum = touchPointHorz * Math.Max(speedClamp, speedfactor) * bOppRot * momentum;
         //rotateSpinnyItem(momentum);
     }

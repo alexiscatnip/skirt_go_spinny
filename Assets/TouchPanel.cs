@@ -10,6 +10,7 @@ public class TouchPanel : MonoBehaviour
     public bool singleTouchIsOrbitMode = true;
     public GameObject objectSpinny;
     private float bOppRot = -1;
+    public float speedFactor = 0.3f;
 
     private void Start()
     {
@@ -30,7 +31,7 @@ public class TouchPanel : MonoBehaviour
         if (singleTouchIsOrbitMode)
         {
             var mouseHorzDelta = getTouchLocHorz();
-            sm.updateInputDelta(mouseHorzDelta  * bOppRot);
+            sm.updateInputDelta(mouseHorzDelta  * bOppRot * speedFactor);
 
 
         } else
